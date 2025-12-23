@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: shadowstream-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: shadow
+      POSTGRES_PASSWORD: shadow
+      POSTGRES_DB: shadowdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command: >
+      postgres -c wal_level=logical
+               -c max_replication_slots=10
+               -c max_wal_senders=10
+               -c wal_keep_size=512MB
+
+volumes:
+  pgdata:
