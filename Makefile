@@ -1,7 +1,7 @@
-start_db:
-	docker compose up --build -d
+start_docker:
+	docker compose up --build
 
-stop_db:
+stop_docker:
 	docker compose down --volumes --remove-orphans
 
 install:
@@ -10,4 +10,4 @@ install:
 start:
 	go run ./cmd/replicator/main.go
 
-PHONY: start_db stop_db install start
+PHONY: start_docker stop_docker install start

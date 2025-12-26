@@ -16,6 +16,26 @@ services:
                -c max_replication_slots=10
                -c max_wal_senders=10
                -c wal_keep_size=512MB
+  redis:
+    image: redis:7
+    container_name: shadowstream-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: shadowstream-redisinsight
+    restart: always
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
 
 volumes:
   pgdata:
+  redisdata:
+
